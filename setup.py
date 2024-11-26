@@ -11,9 +11,9 @@ dependencies = [
 
 setup(
     name="opengis",
-    version="3.1.2",
+    version="3.1.3",
     description="An open source GIS tool.",
-    long_description=open("README.md").read(),
+    long_description=open("README.md", "r", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     author="Zijie Wang",
     author_email="773598627@qq.com",
