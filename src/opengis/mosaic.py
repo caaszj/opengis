@@ -1,21 +1,25 @@
-# Import required libraries
+"""
+This module provides functionality for mosaicking multiple GeoTIFF images.
+It uses GDAL (Geospatial Data Abstraction Library) for processing geospatial data.
+"""
+
 import os
 from osgeo import gdal
 
 def mosaic(path_image, output_dir=None):
     """
-    Mosaic multiple TIF images in a directory into a single TIF file.
+    Create a mosaic from multiple GeoTIFF images in a directory.
     
     Args:
-        path_image (str): Directory path containing TIF images to be mosaicked
-        output_dir (str, optional): Output directory for the mosaicked image. 
-                                  If None, saves to source directory
+        path_image (str): Directory path containing the input GeoTIFF files
+        output_dir (str, optional): Directory path for the output mosaic. If None, 
+                                  the mosaic will be saved in the input directory
     
     Returns:
         None
     """
     path = path_image
-    # Get all TIF files in the directory
+    # Get all .tif files from the directory (case-insensitive)
     path_lists = [f for f in os.listdir(path) if f.lower().endswith('.tif')]
     
     if len(path_lists) < 2:
@@ -27,20 +31,20 @@ def mosaic(path_image, output_dir=None):
     # Open all images using GDAL
     images = [gdal.Open(os.path.join(path, img), gdal.GA_ReadOnly) for img in path_lists]
 
-    # Get projection information from the first image
+    # Get projection from the first image
     input_proj = images[0].GetProjection()
 
-    # Extract date part from the first image name for output filename
+    # Extract date part from the first image's filename for naming the output
     first_image_name = os.path.basename(path_lists[0])
     date_part = first_image_name.split('_')[0]
 
-    # Configure GDAL warp options for mosaic operation
+    # Configure GDAL warp options for the mosaic
     options = gdal.WarpOptions(srcSRS=input_proj, dstSRS=input_proj, format='GTiff',
                              resampleAlg=gdal.GRA_NearestNeighbour)
 
     output_filename = f"{date_part}_Mosaic.tif"
     
-    # Set output path based on output_dir parameter
+    # Set up output path, create directory if it doesn't exist
     if output_dir:
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
@@ -48,10 +52,10 @@ def mosaic(path_image, output_dir=None):
     else:
         output_path = os.path.join(path, output_filename)
         
-    # Perform mosaic operation using GDAL Warp
+    # Create the mosaic using GDAL Warp
     gdal.Warp(output_path, images, options=options)
 
-    # Clean up resources
+    # Clean up by closing all images
     for img in images:
         img = None
         del img
@@ -65,7 +69,7 @@ def get_subfolder_paths(folder_path):
     
     Args:
         folder_path (str): Path to the parent directory
-        
+    
     Returns:
         list: List of paths to all subfolders
     """
@@ -77,11 +81,14 @@ def get_subfolder_paths(folder_path):
 
 def batch_mosaic(folder_path, out_path):
     """
-    Perform mosaic operation on TIF files in all subfolders of the given directory.
+    Perform mosaic operation on all subfolders in the given directory.
     
     Args:
-        folder_path (str): Path to the parent directory containing subfolders with TIF files
-        out_path (str): Output directory for all mosaicked images
+        folder_path (str): Path to the parent directory containing subfolders with GeoTIFF files
+        out_path (str): Output directory path for all mosaics
+    
+    Returns:
+        None
     """
     subfolders = get_subfolder_paths(folder_path)
     for path in subfolders:
