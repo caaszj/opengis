@@ -62,6 +62,3 @@ def batch_mosaic(folder_path, out_path):
     subfolders = get_subfolder_paths(folder_path)
     for path in subfolders:
         mosaic(path, out_path)
-
-# 示例调用
-# batch_mosaic(r"H:\30m_Landsat\NDVI\2022", r"H:\30m_Landsat\NDVI\test")
