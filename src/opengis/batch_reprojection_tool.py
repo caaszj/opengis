@@ -36,7 +36,7 @@ def batch_reprojection(src_img_path, ref_img_path, output_dir, match_resolution=
                 src_ds = gdal.Open(src_file)
                 
                 if src_ds is None:
-                    print(f"无法打开文件: {filename}")
+                    print(f"Failed to open file: {filename}")
                     continue
                 
                 warp_options = gdal.WarpOptions(
@@ -50,11 +50,11 @@ def batch_reprojection(src_img_path, ref_img_path, output_dir, match_resolution=
                 
                 src_ds = None
                 
-                print(f"已处理: {filename}")
+                print(f"Processed: {filename}")
                 
             except Exception as e:
-                print(f"处理文件 {filename} 时出错: {str(e)}")
+                print(f"Error processing file {filename}: {str(e)}")
                 continue
     
     ref_ds = None
-    print("批量转投影完成!")
+    print("Batch reprojection completed!")
