@@ -11,7 +11,7 @@ from osgeo import gdal
 # Enable GDAL exceptions for better error handling
 gdal.UseExceptions()
 
-def batch_reprojection(src_img_path, ref_img_path, output_dir, match_resolution=True, 
+def batch_reprojection(src_img_path, ref_img_path, output_dir, match_resolution=False, 
                    input_formats=('.tif','.tiff','.img','.dat','.hdf'),
                    output_format='GTiff'):
     """
