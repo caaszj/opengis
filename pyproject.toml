@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "opengis"
-version = "3.1.5"
+version = "3.1.6"
 authors = [
     { name="Zijie Wang", email="773598627@qq.com" },
 ]
@@ -23,7 +23,8 @@ dependencies = [
     "geopandas",
     "rasterio",
     "shapely",
-    "rasterstats"
+    "rasterstats",
+    "tqdm"
 ]
 
 [project.urls]
