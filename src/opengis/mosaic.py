@@ -34,16 +34,14 @@ def mosaic(path_image, output_dir=None):
     # Get projection from the first image
     input_proj = images[0].GetProjection()
 
-    # Extract date part from the first image's filename for naming the output
-    first_image_name = os.path.basename(path_lists[0])
-    date_part = first_image_name.split('_')[0]
+    # Use folder name for output filename
+    folder_name = os.path.basename(os.path.normpath(path))
+    output_filename = f"{folder_name}_Mosaic.tif"
 
     # Configure GDAL warp options for the mosaic
     options = gdal.WarpOptions(srcSRS=input_proj, dstSRS=input_proj, format='GTiff',
                              resampleAlg=gdal.GRA_NearestNeighbour)
 
-    output_filename = f"{date_part}_Mosaic.tif"
-    
     # Set up output path, create directory if it doesn't exist
     if output_dir:
         if not os.path.exists(output_dir):
