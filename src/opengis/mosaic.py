@@ -31,6 +31,17 @@ def mosaic(path_image, output_dir=None):
     # Open all images using GDAL
     images = [gdal.Open(os.path.join(path, img), gdal.GA_ReadOnly) for img in path_lists]
 
+    # Check projections before proceeding
+    projections_match, ref_proj = check_projections(images)
+    if not projections_match:
+        print("Error: Not all images have the same coordinate system!")
+        print("Please ensure all images are in the same coordinate system before mosaicking.")
+        # Clean up
+        for img in images:
+            img = None
+            del img
+        return
+
     # Get projection from the first image
     input_proj = images[0].GetProjection()
 
@@ -60,6 +71,29 @@ def mosaic(path_image, output_dir=None):
 
     print(f"Mosaic completed, processed {len(path_lists)} tif files")
     print(f"Output file: {output_path}")
+
+def check_projections(images):
+    """
+    Check if all images have the same projection/coordinate system.
+    
+    Args:
+        images (list): List of GDAL dataset objects
+    
+    Returns:
+        bool: True if all projections match, False otherwise
+        str: Reference projection string for comparison
+    """
+    if not images:
+        return False, None
+        
+    reference_proj = images[0].GetProjection()
+    
+    for img in images[1:]:
+        current_proj = img.GetProjection()
+        if current_proj != reference_proj:
+            return False, reference_proj
+            
+    return True, reference_proj
 
 def get_subfolder_paths(folder_path):
     """
