@@ -6,21 +6,22 @@ It uses GDAL (Geospatial Data Abstraction Library) for processing geospatial dat
 import os
 from osgeo import gdal
 
-def mosaic(path_image, output_dir=None):
+def mosaic(input_dir, output_dir=None):
     """
     Create a mosaic from multiple GeoTIFF images in a directory.
     
     Args:
-        path_image (str): Directory path containing the input GeoTIFF files
+        input_dir (str): Directory path containing the input GeoTIFF files
         output_dir (str, optional): Directory path for the output mosaic. If None, 
                                   the mosaic will be saved in the input directory
     
     Returns:
         None
     """
-    path = path_image
-    # Get all .tif files from the directory (case-insensitive)
-    path_lists = [f for f in os.listdir(path) if f.lower().endswith('.tif')]
+    path = input_dir
+    # Get all TIFF files from the directory (case-insensitive)
+    tiff_extensions = ('.tif', '.tiff')
+    path_lists = [f for f in os.listdir(path) if f.lower().endswith(tiff_extensions)]
     
     if len(path_lists) < 2:
         print(f"Not enough tif images in folder {path} for mosaic.")
@@ -96,20 +97,8 @@ def check_projections(images):
     return True, reference_proj
 
 def get_subfolder_paths(folder_path):
-    """
-    Get paths of all subfolders in the given directory.
-    
-    Args:
-        folder_path (str): Path to the parent directory
-    
-    Returns:
-        list: List of paths to all subfolders
-    """
-    subfolder_paths = []
-    for root, dirs, _ in os.walk(folder_path):
-        for dir_name in dirs:
-            subfolder_paths.append(os.path.join(root, dir_name))
-    return subfolder_paths
+    return [os.path.join(folder_path, d) for d in os.listdir(folder_path) 
+            if os.path.isdir(os.path.join(folder_path, d))]
 
 def batch_mosaic(folder_path, out_path):
     """
