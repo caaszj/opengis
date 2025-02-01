@@ -88,3 +88,30 @@ def batch_reprojection(src_img_path, ref_img_path, output_dir, match_resolution=
     # Close reference dataset
     ref_ds = None
     print("Batch reprojection completed!")
+
+# Usage Examples
+if __name__ == "__main__":
+    # Example 1: Basic usage with default parameters
+    # This will reproject all supported raster files in the source directory
+    # to match the projection of the reference image
+    src_directory = r"D:\source_rasters"
+    reference_image = r"D:\reference\reference.tif"
+    output_directory = r"D:\output_rasters"
+    
+    batch_reprojection(
+        src_img_path=src_directory,
+        ref_img_path=reference_image,
+        output_dir=output_directory
+    )
+    
+    # Example 2: Advanced usage with custom parameters
+    # This will reproject only .tif and .img files, match the reference image resolution,
+    # and output in ENVI format
+    batch_reprojection(
+        src_img_path=r"D:\other_rasters",
+        ref_img_path=r"D:\reference\ref.tif",
+        output_dir=r"D:\output_envi",
+        match_resolution=True,
+        input_formats=('.tif', '.img'),
+        output_format='ENVI'
+    )

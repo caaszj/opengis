@@ -114,3 +114,15 @@ def batch_mosaic(folder_path, out_path):
     subfolders = get_subfolder_paths(folder_path)
     for path in subfolders:
         mosaic(path, out_path)
+
+# Usage Examples
+if __name__ == "__main__":
+    # Example 1: Create a mosaic from a single directory of GeoTIFF files
+    input_directory = r"C:\Data\Landsat_Images"
+    output_directory = r"C:\Data\Mosaics"
+    mosaic(input_directory, output_directory)
+    
+    # Example 2: Batch mosaic processing for multiple subfolders
+    parent_directory = r"C:\Data\Multiple_Landsat_Sets"
+    output_directory = r"C:\Data\Batch_Mosaics"
+    batch_mosaic(parent_directory, output_directory)
