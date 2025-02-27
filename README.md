@@ -1,7 +1,16 @@
 # Open Source GIS Tool
 
-Welcome to our **Open-Source GIS Tool**!  
-This project aims to simplify and streamline **geospatial data processing** and **remote sensing analysis**, offering a practical, efficient, and user-friendly solution for researchers, analysts, and GIS enthusiasts.
+Welcome to our **Open-Source GIS Tool**! This project aims to simplify and streamline **geospatial data processing** and **remote sensing analysis**, offering a practical, efficient, and user-friendly solution for researchers, analysts, and GIS enthusiasts.
+
+---
+
+## 📥 Installation
+
+To get started with our GIS Tool, we recommend using **conda** for installation. This ensures a consistent and isolated environment for your dependencies. Follow these steps:
+1. **Prerequisites**: Ensure you have Anaconda or Miniconda installed.
+2. **Create a Conda Environment**: `conda create -n opengis_env`
+3. **Activate the Environment**: `conda activate opengis_env`
+4. **Install the Package**: `conda install zijiewang::opengis`
 
 ---
 
@@ -18,6 +27,10 @@ This project aims to simplify and streamline **geospatial data processing** and 
 ### 3. **Batch Mosaic**
 - Merge multiple remote sensing images into seamless mosaics.  
 - Perfect for creating larger, unified datasets from smaller tiles.
+
+### 4. **Zonal Statistics**
+- Calculate statistical data for specified zones within a dataset.
+- Useful for detailed area-specific analysis.
 
 ---
 
