@@ -1,7 +1,7 @@
 import unittest
-from opengis.batch_reprojection_tool import *
+from opengis.zonal_stats import *
 
-class TestBatchReprojection(unittest.TestCase):
+class TestZonalStats(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures before each test method."""
         pass

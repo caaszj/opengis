@@ -1,5 +1,5 @@
 import unittest
-from opengis.mosaic import *
+from opengis.image_mosaic import *
 
 class TestMosaic(unittest.TestCase):
     def setUp(self):

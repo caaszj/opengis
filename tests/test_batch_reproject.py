@@ -1,7 +1,7 @@
 import unittest
-from opengis.modis_reprojection_tool import *
+from opengis.batch_reproject import *
 
-class TestModisReprojection(unittest.TestCase):
+class TestBatchReprojection(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures before each test method."""
         pass
